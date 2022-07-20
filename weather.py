@@ -1,6 +1,7 @@
 import requests
 
 from config import Config
+from weather_data import WeatherData
 
 class Weather:
 
@@ -12,4 +13,8 @@ class Weather:
         url = base_url.format(lat, lon, self.api_key)
         r = requests.get(url)
         if r.status_code == 200:
-            pass
+            wd = WeatherData(r.text)
+
+            return wd
+        else:
+            return None
