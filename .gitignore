@@ -1,3 +1,9 @@
 # created by virtualenv automatically
 config.py
 __pycache__/
+bin
+lib64
+Include
+Lib
+Scripts
+bin/python
