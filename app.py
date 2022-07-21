@@ -51,7 +51,7 @@ class App(tk.Frame):
         self.current_humidity_label.grid(column=0, row=1)
 
         # current weather icon
-        icon = weather.current.image
+        icon = weather.current.weather.image
         self.current_icon_label = ttk.Label(self.current_weather_frame, image = icon)
         self.current_icon_label.grid(column=1, row=0, rowspan=2)
         self.current_icon_label.image = icon
@@ -59,16 +59,16 @@ class App(tk.Frame):
         # grid the frame
         self.current_weather_frame.grid(column=0, row=1)
 
-    def update_widgets_hourly(self, forecast_weather):
+    def update_widgets_hourly(self, weather):
         # create the hourly frame
         self.forecast_hourly_frame = ttk.Frame(self)
         
         # create the hourly temps
-        self.hour_one_time = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[0].time_only)
+        self.hour_one_time = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[0].time_only)
         self.hour_one_time.grid(column=0, row=0)
-        self.hour_one_temp_label = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[0].temp_f)
+        self.hour_one_temp_label = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[0].temp)
         self.hour_one_temp_label.grid(column=0, row=1)
-        hour_one_icon = forecast_weather.next_12_hours[0].image
+        hour_one_icon = weather.next_12_hours[0].weather.image
         self.hour_one_icon_label = ttk.Label(self.forecast_hourly_frame, image = hour_one_icon)
         self.hour_one_icon_label.grid(column=0, row=2)
         self.hour_one_icon_label.image = hour_one_icon
@@ -76,11 +76,11 @@ class App(tk.Frame):
         separator1 = ttk.Separator(self.forecast_hourly_frame, orient='vertical')
         separator1.grid(column=1, row=0, rowspan=3, sticky='ns')
 
-        self.hour_two_time = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[1].time_only)
+        self.hour_two_time = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[1].time_only)
         self.hour_two_time.grid(column=2, row=0)
-        self.hour_two_temp_label = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[1].temp_f)
+        self.hour_two_temp_label = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[1].temp)
         self.hour_two_temp_label.grid(column=2, row=1)
-        hour_two_icon = forecast_weather.next_12_hours[1].image
+        hour_two_icon = weather.next_12_hours[1].weather.image
         self.hour_two_icon_label = ttk.Label(self.forecast_hourly_frame, image = hour_two_icon)
         self.hour_two_icon_label.grid(column=2, row=2)
         self.hour_two_icon_label.image = hour_two_icon
@@ -88,11 +88,11 @@ class App(tk.Frame):
         separator2 = ttk.Separator(self.forecast_hourly_frame, orient='vertical')
         separator2.grid(column=3, row=0, rowspan=3, sticky='ns')
 
-        self.hour_three_time = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[2].time_only)
+        self.hour_three_time = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[2].time_only)
         self.hour_three_time.grid(column=4, row=0)
-        self.hour_three_temp_label = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[2].temp_f)
+        self.hour_three_temp_label = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[2].temp)
         self.hour_three_temp_label.grid(column=4, row=1)
-        hour_three_icon = forecast_weather.next_12_hours[2].image
+        hour_three_icon = weather.next_12_hours[2].weather.image
         self.hour_three_icon_label = ttk.Label(self.forecast_hourly_frame, image = hour_three_icon)
         self.hour_three_icon_label.grid(column=4, row=2)
         self.hour_three_icon_label.image = hour_three_icon
@@ -100,11 +100,11 @@ class App(tk.Frame):
         separator3 = ttk.Separator(self.forecast_hourly_frame, orient='vertical')
         separator3.grid(column=5, row=0, rowspan=3, sticky='ns')
 
-        self.hour_four_time = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[3].time_only)
+        self.hour_four_time = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[3].time_only)
         self.hour_four_time.grid(column=6, row=0)
-        self.hour_four_temp_label = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[3].temp_f)
+        self.hour_four_temp_label = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[3].temp)
         self.hour_four_temp_label.grid(column=6, row=1)
-        hour_four_icon = forecast_weather.next_12_hours[3].image
+        hour_four_icon = weather.next_12_hours[3].weather.image
         self.hour_four_icon_label = ttk.Label(self.forecast_hourly_frame, image = hour_four_icon)
         self.hour_four_icon_label.grid(column=6, row=2)
         self.hour_four_icon_label.image = hour_four_icon
@@ -112,11 +112,11 @@ class App(tk.Frame):
         separator4 = ttk.Separator(self.forecast_hourly_frame, orient='vertical')
         separator4.grid(column=7, row=0, rowspan=3, sticky='ns')
 
-        self.hour_five_time = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[4].time_only)
+        self.hour_five_time = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[4].time_only)
         self.hour_five_time.grid(column=8, row=0)
-        self.hour_five_temp_label = ttk.Label(self.forecast_hourly_frame, text = forecast_weather.next_12_hours[4].temp_f)
+        self.hour_five_temp_label = ttk.Label(self.forecast_hourly_frame, text = weather.next_12_hours[4].temp)
         self.hour_five_temp_label.grid(column=8, row=1)
-        hour_five_icon = forecast_weather.next_12_hours[4].image
+        hour_five_icon = weather.next_12_hours[4].weather.image
         self.hour_five_icon_label = ttk.Label(self.forecast_hourly_frame, image = hour_five_icon)
         self.hour_five_icon_label.grid(column=8, row=2)
         self.hour_five_icon_label.image = hour_five_icon
@@ -144,6 +144,7 @@ class App(tk.Frame):
                 wd = w.get_weather_data(geo.lat, geo.lon)
                 if wd:
                     self.update_widgets_current_weather(wd)
+                    self.update_widgets_hourly(wd)
             else:
                 messagebox.showerror("Error", "Weather data could not be retrieved.")
         else:

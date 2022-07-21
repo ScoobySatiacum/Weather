@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 from PIL import ImageTk, Image
@@ -20,6 +21,17 @@ class WeatherData:
         self.daily_list = []
         for day in self.__dict__['daily']:
             self.daily_list.append(Daily(day))
+        self.next_12_hours = []
+        self.build_12_hour_list()
+
+    def build_12_hour_list(self):
+        hours = 0
+        time_now = datetime.datetime.now().timestamp()
+        for hour in self.hourly_list:
+            if hours < 12:
+                if hour.dt > time_now:
+                    self.next_12_hours.append(hour)
+                    hours += 1
 
 class Current:
 
@@ -79,6 +91,7 @@ class Hourly():
     def __init__(self, data):
 
         self.dt = data['dt']
+        self.time_only = datetime.datetime.fromtimestamp(self.dt).strftime('%H:%M')
         self.temp = data['temp']
         self.feels_like = data['feels_like']
         self.pressure = data['pressure']
