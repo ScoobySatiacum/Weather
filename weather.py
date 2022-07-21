@@ -14,7 +14,7 @@ class Weather:
         r = requests.get(url)
         if r.status_code == 200:
             wd = WeatherData(r.text)
-
+            
             return wd
         else:
-            return None
+            return None          

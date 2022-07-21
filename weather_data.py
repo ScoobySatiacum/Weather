@@ -1,4 +1,8 @@
 import json
+import os
+from PIL import ImageTk, Image
+from io import BytesIO
+import requests
 
 class WeatherData:
 
@@ -36,6 +40,8 @@ class Current:
         self.wind_deg = data['wind_deg']
         self.weather = CurrentWeather(data['weather'])
 
+        self.weather.retrieve_current_weather_icons()
+
 class CurrentWeather:
 
     def __init__(self, data):
@@ -44,6 +50,29 @@ class CurrentWeather:
         self.main = data[0]['main']
         self.description = data[0]['description']
         self.icon = data[0]['icon']
+        self.image_raw_data = None
+        self.image = None
+
+    def retrieve_current_weather_icons(self):
+        base_url = 'http://openweathermap.org/img/wn/{}.png'
+        # retrieve icons for current weather object
+        filename = self.icon + '.png'
+        working_dir = os.path.dirname(os.path.realpath(__file__))
+        image_dir = os.path.join(working_dir, 'icons')
+
+        if not os.path.exists(image_dir):
+            os.mkdir(image_dir)
+
+        if not os.path.exists(os.path.join(image_dir, filename)):
+            current_weather_url = base_url.format(self.icon)
+            r = requests.get(current_weather_url)
+            if r.status_code == 200:
+                self.image_raw_data = r.content
+                self.image = ImageTk.PhotoImage(Image.open(BytesIO(self.image_raw_data)))
+                icon = Image.open(BytesIO(self.image_raw_data))
+                icon.save(os.path.join(image_dir, filename))
+        else:
+            self.image = ImageTk.PhotoImage(Image.open(os.path.join(image_dir, filename)))
 
 class Hourly():
 
@@ -62,6 +91,8 @@ class Hourly():
         self.wind_deg = data['wind_deg']
         self.weather = CurrentWeather(data['weather'])
         self.pop = data['pop']
+
+        self.weather.retrieve_current_weather_icons()
 
 class Daily:
 
@@ -85,9 +116,10 @@ class Daily:
         self.wind_gust = data['wind_gust']
         self.wind_deg = data['wind_deg']
         self.pop = data['pop']
-        self.weather = CurrentWeather(data['weather'])        
+        self.weather = CurrentWeather(data['weather'])
 
         self.calculate_moon_phase()
+        self.weather.retrieve_current_weather_icons()
 
     def calculate_moon_phase(self):
         if self.moon_phase == 0 or self.moon_phase == 1:
