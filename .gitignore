@@ -1,7 +1,7 @@
 # created by virtualenv automatically
 config.py
 __pycache__/
-bin
+bin/
 lib64
 Include
 Lib
