@@ -124,10 +124,33 @@ class App(tk.Frame):
         # grid the frame
         self.forecast_hourly_frame.grid(column=0, row=2)
 
-    def update_widgets_forecast_weather(self, forecast_weather):
+    def update_widgets_forecast_weather(self, weather_data):
         # create the forecast weather frame
         self.forecast_weather_frame = ttk.Frame(self)
 
+        day_one_icon = weather_data.daily_list[0].weather.image
+        self.day_one_icon_label = ttk.Label(self.forecast_weather_frame, image = day_one_icon)
+        self.day_one_icon_label.grid(column=0, row=0, padx=(5, 20), sticky=tk.W)
+        self.day_one_icon_label.image = day_one_icon
+        self.day_one_label = ttk.Label(self.forecast_weather_frame, text = weather_data.daily_list[0].day)
+        self.day_one_label.grid(column=1, row=0, padx=(20, 20))
+        self.day_one_temp_high_label = ttk.Label(self.forecast_weather_frame, text = 'H: ' + str(weather_data.daily_list[0].temp.max) + ' L: ' + str(weather_data.daily_list[0].temp.min))
+        self.day_one_temp_high_label.grid(column=2, row=0, padx=(20, 5))
+
+        separator1 = ttk.Separator(self.forecast_weather_frame, orient='horizontal')
+        separator1.grid(column=0, row=1, columnspan=3, sticky='ew')
+
+        day_two_icon = weather_data.daily_list[1].weather.image
+        self.day_two_icon_label = ttk.Label(self.forecast_weather_frame, image = day_two_icon)
+        self.day_two_icon_label.grid(column=0, row=2, padx=(5, 20), sticky=tk.W)
+        self.day_two_icon_label.image = day_two_icon
+        self.day_two_label = ttk.Label(self.forecast_weather_frame, text = weather_data.daily_list[1].day)
+        self.day_two_label.grid(column=1, row=2, padx=(20, 20))
+        self.day_two_temp_high_label = ttk.Label(self.forecast_weather_frame, text = 'H: ' + str(weather_data.daily_list[1].temp.max) + ' L: ' + str(weather_data.daily_list[1].temp.min))
+        self.day_two_temp_high_label.grid(column=2, row=2, padx=(20, 5))
+
+        # grid the frame
+        self.forecast_weather_frame.grid(column=0, row=3)
 
 
     def button_search(self):
@@ -141,10 +164,11 @@ class App(tk.Frame):
             geo = g.search_for_location(user_input)
             if geo:
                 w = Weather()
-                wd = w.get_weather_data(geo.lat, geo.lon)
+                wd = w.get_weather_data(geo.lat, geo.lon, True)
                 if wd:
                     self.update_widgets_current_weather(wd)
                     self.update_widgets_hourly(wd)
+                    self.update_widgets_forecast_weather(wd)
             else:
                 messagebox.showerror("Error", "Weather data could not be retrieved.")
         else:

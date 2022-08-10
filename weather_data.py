@@ -112,6 +112,7 @@ class Daily:
     def __init__(self, data):
 
         self.dt = data['dt']
+        self.day = datetime.datetime.fromtimestamp(self.dt).strftime('%a')
         self.sunrise = data['sunrise']
         self.sunset = data['sunset']
         self.moonrise = data['moonrise']
