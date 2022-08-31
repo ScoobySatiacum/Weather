@@ -4,3 +4,5 @@ __pycache__/
 Scripts
 Lib
 include
+lib
+venv/
