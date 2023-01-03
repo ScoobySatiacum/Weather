@@ -16,10 +16,18 @@ class App(tk.Frame):
 
         self.utilities = Utilities()
         self.weather = Weather()
+        self.configure(background="black")
+
+        self.style = ttk.Style(self)
+        self.style.configure("TButton", background="black")
+        self.style.configure("TFrame", background="black")
+        self.style.configure("TLabel", background="black", foreground="white")
 
     def create_widgets(self):
+
         # create a frame to contain the search widgets
         self.search_frame = ttk.Frame(self)
+
         # create a label for location entry
         self.location_label = ttk.Label(self.search_frame, text = 'Location: ')
         self.location_label.grid(column=0, row=0)
@@ -39,6 +47,7 @@ class App(tk.Frame):
         self.search_frame.grid(column=0,row=0)
 
     def update_widgets_current_weather(self, weather):
+
         # create the current weather frame
         self.current_weather_frame = ttk.Frame(self)
 
@@ -60,6 +69,7 @@ class App(tk.Frame):
         self.current_weather_frame.grid(column=0, row=1)
 
     def update_widgets_hourly(self, weather):
+
         # create the hourly frame
         self.forecast_hourly_frame = ttk.Frame(self)
         
@@ -124,11 +134,107 @@ class App(tk.Frame):
         # grid the frame
         self.forecast_hourly_frame.grid(column=0, row=2)
 
-    def update_widgets_forecast_weather(self, forecast_weather):
+    def update_widgets_forecast_weather(self, weather):
+
         # create the forecast weather frame
         self.forecast_weather_frame = ttk.Frame(self)
 
+        # day 1
+        self.day_one_frame = ttk.Frame(self.forecast_weather_frame)
 
+        self.day_one_time = ttk.Label(self.day_one_frame, text = weather.daily_list[0].date)
+        self.day_one_time.grid(column=0, row=0)
+        self.day_one_temp_min_label = ttk.Label(self.day_one_frame, text = 'Min: ' + str(weather.daily_list[0].temp.min))
+        self.day_one_temp_min_label.grid(column=1, row=0)
+        self.day_one_temp_max_label = ttk.Label(self.day_one_frame, text = 'Max: ' + str(weather.daily_list[0].temp.max))
+        self.day_one_temp_max_label.grid(column=2, row=0)
+        day_one_icon = weather.daily_list[0].weather.image
+        self.day_one_icon_label = ttk.Label(self.day_one_frame, image = day_one_icon)
+        self.day_one_icon_label.grid(column=3, row=0)
+        self.day_one_icon_label.image = day_one_icon
+
+        self.day_one_frame.grid(column=0, row=0)
+
+        separator1 = ttk.Separator(self.forecast_weather_frame, orient='horizontal')
+        separator1.grid(column=0, row=1, sticky='ew')
+
+        # day 2
+        self.day_two_frame = ttk.Frame(self.forecast_weather_frame)
+
+        self.day_two_time = ttk.Label(self.day_two_frame, text = weather.daily_list[1].date)
+        self.day_two_time.grid(column=0, row=0)
+        self.day_two_temp_min_label = ttk.Label(self.day_two_frame, text = 'Min: ' + str(weather.daily_list[1].temp.min))
+        self.day_two_temp_min_label.grid(column=1, row=0)
+        self.day_two_temp_max_label = ttk.Label(self.day_two_frame, text = 'Max: ' + str(weather.daily_list[1].temp.max))
+        self.day_two_temp_max_label.grid(column=2, row=0)
+        day_two_icon = weather.daily_list[1].weather.image
+        self.day_two_icon_label = ttk.Label(self.day_two_frame, image = day_two_icon)
+        self.day_two_icon_label.grid(column=3, row=0)
+        self.day_two_icon_label.image = day_two_icon
+
+        self.day_two_frame.grid(column=0, row=2)
+        
+        separator2 = ttk.Separator(self.forecast_weather_frame, orient='horizontal')
+        separator2.grid(column=0, row=3, sticky='ew')
+
+        # day 3
+        self.day_three_frame = ttk.Frame(self.forecast_weather_frame)
+
+        self.day_three_time = ttk.Label(self.day_three_frame, text = weather.daily_list[2].date)
+        self.day_three_time.grid(column=0, row=0)
+        self.day_three_temp_min_label = ttk.Label(self.day_three_frame, text = 'Min: ' + str(weather.daily_list[2].temp.min))
+        self.day_three_temp_min_label.grid(column=1, row=0)
+        self.day_three_temp_max_label = ttk.Label(self.day_three_frame, text = 'Max: ' + str(weather.daily_list[2].temp.max))
+        self.day_three_temp_max_label.grid(column=2, row=0)
+        day_three_icon = weather.daily_list[2].weather.image
+        self.day_three_icon_label = ttk.Label(self.day_three_frame, image = day_three_icon)
+        self.day_three_icon_label.grid(column=3, row=0)
+        self.day_three_icon_label.image = day_three_icon
+
+        self.day_three_frame.grid(column=0, row=4)
+        
+        separator3 = ttk.Separator(self.forecast_weather_frame, orient='horizontal')
+        separator3.grid(column=0, row=5, sticky='ew')
+
+        # day 4
+        self.day_four_frame = ttk.Frame(self.forecast_weather_frame)
+
+        self.day_four_time = ttk.Label(self.day_four_frame, text = weather.daily_list[3].date)
+        self.day_four_time.grid(column=0, row=0)
+        self.day_four_temp_min_label = ttk.Label(self.day_four_frame, text = 'Min: ' + str(weather.daily_list[3].temp.min))
+        self.day_four_temp_min_label.grid(column=1, row=0)
+        self.day_four_temp_max_label = ttk.Label(self.day_four_frame, text = 'Max: ' + str(weather.daily_list[3].temp.max))
+        self.day_four_temp_max_label.grid(column=2, row=0)
+        day_four_icon = weather.daily_list[3].weather.image
+        self.day_four_icon_label = ttk.Label(self.day_four_frame, image = day_four_icon)
+        self.day_four_icon_label.grid(column=3, row=0)
+        self.day_four_icon_label.image = day_four_icon
+
+        self.day_four_frame.grid(column=0, row=6)
+        
+        separator3 = ttk.Separator(self.forecast_weather_frame, orient='horizontal')
+        separator3.grid(column=0, row=7, sticky='ew')
+
+        # day 5
+        self.day_five_frame = ttk.Frame(self.forecast_weather_frame)
+
+        self.day_five_time = ttk.Label(self.day_five_frame, text = weather.daily_list[4].date)
+        self.day_five_time.grid(column=0, row=0)
+        self.day_five_temp_min_label = ttk.Label(self.day_five_frame, text = 'Min: ' + str(weather.daily_list[4].temp.min))
+        self.day_five_temp_min_label.grid(column=1, row=0)
+        self.day_five_temp_max_label = ttk.Label(self.day_five_frame, text = 'Max: ' + str(weather.daily_list[4].temp.max))
+        self.day_five_temp_max_label.grid(column=2, row=0)
+        day_five_icon = weather.daily_list[4].weather.image
+        self.day_five_icon_label = ttk.Label(self.day_five_frame, image = day_five_icon)
+        self.day_five_icon_label.grid(column=3, row=0)
+        self.day_five_icon_label.image = day_five_icon
+
+        self.day_five_frame.grid(column=0, row=8)
+        
+        separator3 = ttk.Separator(self.forecast_weather_frame, orient='horizontal')
+        separator3.grid(column=0, row=9, sticky='ew')
+
+        self.forecast_weather_frame.grid(column=0, row=3)
 
     def button_search(self):
         # retrieve user input from self.location_entry
@@ -145,6 +251,7 @@ class App(tk.Frame):
                 if wd:
                     self.update_widgets_current_weather(wd)
                     self.update_widgets_hourly(wd)
+                    self.update_widgets_forecast_weather(wd)
             else:
                 messagebox.showerror("Error", "Weather data could not be retrieved.")
         else:
